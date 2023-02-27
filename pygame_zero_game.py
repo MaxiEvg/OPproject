@@ -30,7 +30,7 @@ player_position = WIDTH // 2, HEIGHT // 2
 player.center = player_position
 
 # Set up the coins to collect
-COIN_COUNT = 10
+COIN_COUNT = 11
 coin_list = list()
 
 # Set up a timer to create new coins
@@ -135,7 +135,15 @@ def draw():
 
     # Set the background color to pink
     screen.fill("pink")  # noqa: F821
-
+    if len(coin_list) == 5:
+        screen.fill("yellow")
+    elif len(coin_list) == 6:
+        screen.fill("orange")
+    elif len(coin_list) == 7:
+        screen.fill("red")
+    elif len(coin_list) > 8:
+        screen.fill("black")
+    
     # Draw the player
     player.draw()
 
@@ -150,7 +158,13 @@ def draw():
         fontsize=48,
         color="black",
     )
-
+    
+    screen.draw.text(  # edited
+        f"Score: {score}",
+        (50, HEIGHT - 50),
+        fontsize=52,
+        color="white",
+    )
 
 # Schedule the first coin to appear
 clock.schedule(add_coin, coin_countdown)  # noqa: F821
