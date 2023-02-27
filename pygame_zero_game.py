@@ -30,11 +30,11 @@ player_position = WIDTH // 2, HEIGHT // 2
 player.center = player_position
 
 # Set up the coins to collect
-COIN_COUNT = 11
+COIN_COUNT = 9
 coin_list = list()
 
 # Set up a timer to create new coins
-coin_countdown = 2.5
+coin_countdown = 2
 coin_interval = 0.1
 
 # Score is initially zero
@@ -141,7 +141,7 @@ def draw():
         screen.fill("orange")
     elif len(coin_list) == 7:
         screen.fill("red")
-    elif len(coin_list) > 8:
+    elif len(coin_list) >= 8:
         screen.fill("black")
     
     # Draw the player
@@ -161,8 +161,8 @@ def draw():
     
     screen.draw.text(  # edited
         f"Score: {score}",
-        (50, HEIGHT - 50),
-        fontsize=52,
+        (48, HEIGHT - 50),
+        fontsize=60,
         color="white",
     )
 
