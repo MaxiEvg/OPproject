@@ -133,7 +133,6 @@ def draw():
     # Clear the screen first
     screen.clear()  # noqa: F821
 
-#comment
     # Set the background color to pink
     screen.fill("pink")  # noqa: F821
     if len(coin_list) == 5:
