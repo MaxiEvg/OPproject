@@ -22,7 +22,7 @@ from random import randint
 
 # Set the width and height of your output window, in pixels
 WIDTH = 1280
-HEIGHT = 700
+HEIGHT = 768
 
 # Set up the player
 player = Actor("alien_green_stand")  # noqa: F821
