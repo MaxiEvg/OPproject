@@ -21,7 +21,7 @@ from typing import Tuple
 from random import randint
 
 # Set the width and height of your output window, in pixels
-WIDTH = 1231231
+WIDTH = 1024
 HEIGHT = 768
 
 # Set up the player
