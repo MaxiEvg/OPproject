@@ -33,13 +33,14 @@ player.center = player_position
 COIN_COUNT = 9
 coin_list = list()
 
+SPIKE_COUTN = 2
 spike_list = list()
 # Set up a timer to create new coins
 coin_countdown = 2
 coin_interval = 0.1
 
 # Setup a timer for create new spike
-spike_countdown = 6
+spike_countdown = 4
 spike_interval = 0.5
 
 # Score is initially zero
@@ -51,18 +52,19 @@ def add_spike():
     """
     global spike_countdown
     
-    new_spike = Spike(  # noqa: F821
-        "spike", (randint(10, WIDTH - 10), randint(10, HEIGHT - 10)) ## SHOULD ADD THE SPRITE FOR IT
+    new_spike = Actor(  # edited
+        "spike", (randint(10, WIDTH - 10), randint(10, HEIGHT - 10)) # done
     )
     # Adds spike to a list
     spike_list.append(new_spike)
+    
     if len(spike_list) < 3:
         spike_countdown -= spike_interval
     if spike_countdown < 1:
-       spike_countdown = 5
+       spike_countdown = 50
        
     # Schedule the next spike addition
-    clock.schedule1(add_spike, spike_countdown) 
+    clock.schedule(add_spike, spike_countdown) 
 
 def add_coin():
     """Adds a new coin to playfield, then
@@ -78,15 +80,13 @@ def add_coin():
     # Add it to the global coin list
     coin_list.append(new_coin)
     
-
-    # Decrease the time between coin appearances if there are
-    # fewer than three coins on the screen.
+    # Decrease the time between coin appearances if there are # fewer than three coins on the screen.
     if len(coin_list) < 3:
         coin_countdown -= coin_interval
 
     # Make sure you don't go too quickly
-    if coin_countdown < 0.1:
-        coin_countdown = 0.1
+    if coin_countdown < 0.3:
+        coin_countdown = 0.347
 
     # Schedule the next coin addition
     clock.schedule(add_coin, coin_countdown)  # noqa: F821
@@ -123,12 +123,13 @@ def update(delta_time: float):
     """
     global score
     global health 
+    global color_
 
     # Update the player position
     player.center = player_position
 
-    # Check if the player has collided with a coin
-    # First, set up a list of coins to remove
+    # Check if the player has collided with a coin or a spike
+    # First, setting up a list of coins or a spike to remove 
     coin_remove_list = []
     spike_remove_list = []
 
@@ -138,17 +139,25 @@ def update(delta_time: float):
             sounds.coin_pickup.play()  # noqa: F821
             coin_remove_list.append(coin)
             score += 10
+
     # Check each spike in the list for a collision
     for spike in spike_list:
         if player.colliderect(spike):
-            sounds.coin_pickup.play()  # noqa: F821
+            sounds.eep.play()  # edited
             spike_remove_list.append(spike)
             score -= 50
+            health -=1
+            if health == 3:
+                color_ = "yellow"
+            elif health == 2:
+                color_ = "orange"
+            elif health == 1:
+                color_ = "red" 
 
     # Remove any coins with which you collided
     for coin in coin_remove_list:
         coin_list.remove(coin)
-    # Remove any coins with which you collided
+    # Remove any spike with which you collided
     for spike in spike_remove_list:
         spike_list.remove(spike)
 
@@ -156,6 +165,10 @@ def update(delta_time: float):
     if len(coin_list) >= COIN_COUNT:
         # Stop making new coins
         clock.unschedule(add_coin)  # noqa: F821
+        clock.unschedule(add_spike)
+    elif health <=0:
+        clock.unschedule(add_coin)
+        clock.unschedule(add_spike)
 
         # Print the final score and exit the game
         print(f"Game over! Final score: {score}")
@@ -185,6 +198,8 @@ def draw():
     # Draw the remaining coins
     for coin in coin_list:
         coin.draw()
+    for spike in spike_list:
+        spike.draw()
 
     # Draw the current score at the bottom
     screen.draw.text(  # noqa: F821
@@ -201,8 +216,19 @@ def draw():
         color="white",
     )
 
+    color_ = "white"
+
+    screen.draw.text(f"HP: {health}",
+        (100, 100),
+        fontsize=60,
+        color=color_,
+    )
+   
+    
+
 # Schedule the first coin to appear
 clock.schedule(add_coin, coin_countdown)  # noqa: F821
-
+# Schedule the first spike to appear
+clock.schedule(add_spike, spike_countdown) 
 # Run the program
 pgzrun.go()
