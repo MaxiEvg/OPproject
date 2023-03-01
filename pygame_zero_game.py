@@ -21,8 +21,8 @@ from typing import Tuple
 from random import randint
 
 # Set the width and height of your output window, in pixels
-WIDTH = 1024
-HEIGHT = 768
+WIDTH = 1280
+HEIGHT = 800
 
 # Set up the player
 player = Actor("alien_green_stand")  # noqa: F821
@@ -52,7 +52,7 @@ def add_spike():
     global spike_countdown
     
     new_spike = Spike(  # noqa: F821
-                      "spike", (randint(10, WIDTH - 10), randint(10, HEIGHT - 10)) ## SHOULD ADD THE SPRITE FOR IT
+        "spike", (randint(10, WIDTH - 10), randint(10, HEIGHT - 10)) ## SHOULD ADD THE SPRITE FOR IT
     )
     # Adds spike to a list
     spike_list.append(new_spike)
