@@ -33,13 +33,36 @@ player.center = player_position
 COIN_COUNT = 9
 coin_list = list()
 
+spike_list = list()
 # Set up a timer to create new coins
 coin_countdown = 2
 coin_interval = 0.1
 
+# Setup a timer for create new spike
+spike_countdown = 6
+spike_interval = 0.5
+
 # Score is initially zero
 score = 0
-
+# Health is 5
+health = 5
+def add_spike():
+    """should damage actor while touching
+    """
+    global spike_countdown
+    
+    new_spike = Spike(  # noqa: F821
+                      "spike", (randint(10, WIDTH - 10), randint(10, HEIGHT - 10)) ## SHOULD ADD THE SPRITE FOR IT
+    )
+    # Adds spike to a list
+    spike_list.append(new_spike)
+    if len(spike_list) < 3:
+        spike_countdown -= spike_interval
+    if spike_countdown < 1:
+       spike_countdown = 5
+       
+    # Schedule the next spike addition
+    clock.schedule1(add_spike, spike_countdown) 
 
 def add_coin():
     """Adds a new coin to playfield, then
@@ -54,6 +77,7 @@ def add_coin():
 
     # Add it to the global coin list
     coin_list.append(new_coin)
+    
 
     # Decrease the time between coin appearances if there are
     # fewer than three coins on the screen.
@@ -98,6 +122,7 @@ def update(delta_time: float):
         delta_time {float} -- Time since the last frame
     """
     global score
+    global health 
 
     # Update the player position
     player.center = player_position
@@ -105,6 +130,7 @@ def update(delta_time: float):
     # Check if the player has collided with a coin
     # First, set up a list of coins to remove
     coin_remove_list = []
+    spike_remove_list = []
 
     # Check each coin in the list for a collision
     for coin in coin_list:
@@ -112,10 +138,19 @@ def update(delta_time: float):
             sounds.coin_pickup.play()  # noqa: F821
             coin_remove_list.append(coin)
             score += 10
+    # Check each spike in the list for a collision
+    for spike in spike_list:
+        if player.colliderect(spike):
+            sounds.coin_pickup.play()  # noqa: F821
+            spike_remove_list.append(spike)
+            score -= 50
 
     # Remove any coins with which you collided
     for coin in coin_remove_list:
         coin_list.remove(coin)
+    # Remove any coins with which you collided
+    for spike in spike_remove_list:
+        spike_list.remove(spike)
 
     # The game is over when there are too many coins on the screen
     if len(coin_list) >= COIN_COUNT:
