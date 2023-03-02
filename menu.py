@@ -1,6 +1,7 @@
 from typing import Tuple
 import pgzrun
-from random import randint
+
+
 WIDTH = 1280
 HEIGHT = 800
 
@@ -29,21 +30,9 @@ def on_mouse_move(pos: Tuple):
         player_position[1] = HEIGHT
 
 
-def on_mouse_down():
-    print("Mouse button clicked")
-def on_mouse_down(pos):
-    print("Mouse button clicked at", pos)
-def on_mouse_down(button):
-    print("Mouse button", button, "clicked")
-def on_mouse_down(pos, button):
-    print("Mouse button", button, "clicked at", pos)
 
-levels = list()
 
-RED = 200, 0, 0
-BOX = Rect((50, 300), (300, 150))
-
-def draw():
+def draw_level():
     """Render everything on the screen once per frame"""
 
     # Clear the screen first
@@ -53,11 +42,13 @@ def draw():
     screen.fill("pink")  # noqa: F821
 
 
-    level1 = Actor("level1", (randint(10, WIDTH - 10), randint(10, HEIGHT - 10)))
-    level2 = Actor("level2", (randint(10, WIDTH - 10), randint(10, HEIGHT - 10)))
-    level3 = Actor("level3", (randint(10, WIDTH - 10), randint(10, HEIGHT - 10)))
-    level1.draw(), level2.draw(), level3.draw()
-    
+    level1 = Actor("level1", (150, 300) )
+    level2 = Actor("level2", (500, 300) )
+    level3 = Actor("level3", (850, 300) )
+    levels = [level1, level2, level3]
+    for i in levels:
+        i.draw()
+                
 
 
 

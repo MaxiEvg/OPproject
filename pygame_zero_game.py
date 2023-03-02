@@ -61,7 +61,7 @@ def add_spike():
     if len(spike_list) < 3:
         spike_countdown -= spike_interval
     if spike_countdown < 1:
-       spike_countdown = 50
+       spike_countdown = 5
        
     # Schedule the next spike addition
     clock.schedule(add_spike, spike_countdown) 
