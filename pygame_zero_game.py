@@ -33,15 +33,14 @@ player.center = player_position
 COIN_COUNT = 9
 coin_list = list()
 
-SPIKE_COUN = 2
 spike_list = list()
 # Set up a timer to create new coins
-coin_countdown = 2
-coin_interval = 0.1
+coin_countdown = 1
+coin_interval = 0.2
 
 # Setup a timer for create new spike
-spike_countdown = 4
-spike_interval = 0.5
+spike_countdown = 5
+spike_interval = 0.8
 
 # Score is initially zero
 score = 0
@@ -85,8 +84,8 @@ def add_coin():
         coin_countdown -= coin_interval
 
     # Make sure you don't go too quickly
-    if coin_countdown < 0.3:
-        coin_countdown = 0.347
+    if coin_countdown < 0.4:
+        coin_countdown = 0.4
 
     # Schedule the next coin addition
     clock.schedule(add_coin, coin_countdown)  # noqa: F821
@@ -157,7 +156,16 @@ def update(delta_time: float):
             elif health == 1:
                 color_ = "red"
         if len(spike_list) > 6:
-                spike_remove_list.append(spike)          
+                spike_remove_list.append(spike)      
+
+# Giving one health when score divides by 1000
+        
+    if (score % 1000 == 0) and (score > 0):
+        health += 1
+        score += 10
+           
+    if health > 5:
+        health = 5
 
     # Remove any coins with which you collided
     for coin in coin_remove_list:
@@ -171,7 +179,11 @@ def update(delta_time: float):
         # Stop making new coins
         clock.unschedule(add_coin)  # noqa: F821
         clock.unschedule(add_spike)
-    elif health <=0:
+
+        # Print the final score and exit the game
+        print(f"Game over! Final score: {score}")
+        exit()
+    if health <=0:
         clock.unschedule(add_coin)
         clock.unschedule(add_spike)
 
@@ -220,7 +232,6 @@ def draw():
         fontsize=60,
         color=color_,
     )
-   
     
 
 # Schedule the first coin to appear
