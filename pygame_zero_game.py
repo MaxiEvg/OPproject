@@ -33,7 +33,7 @@ player.center = player_position
 COIN_COUNT = 9
 coin_list = list()
 
-SPIKE_COUTN = 2
+SPIKE_COUN = 2
 spike_list = list()
 # Set up a timer to create new coins
 coin_countdown = 2
@@ -114,6 +114,7 @@ def on_mouse_move(pos: Tuple):
     if player_position[1] > HEIGHT:
         player_position[1] = HEIGHT
 
+color_ = "white"
 
 def update(delta_time: float):
     """Called every frame to update game objects
@@ -147,12 +148,16 @@ def update(delta_time: float):
             spike_remove_list.append(spike)
             score -= 50
             health -=1
+            if health > 3:
+                color_ = "white"
             if health == 3:
                 color_ = "yellow"
             elif health == 2:
                 color_ = "orange"
             elif health == 1:
-                color_ = "red" 
+                color_ = "red"
+        if len(spike_list) > 6:
+                spike_remove_list.append(spike)          
 
     # Remove any coins with which you collided
     for coin in coin_remove_list:
@@ -202,21 +207,13 @@ def draw():
         spike.draw()
 
     # Draw the current score at the bottom
-    screen.draw.text(  # noqa: F821
-        f"Score: {score}",
-        (50, HEIGHT - 50),
-        fontsize=48,
-        color="black",
-    )
     
     screen.draw.text(  # edited
         f"Score: {score}",
         (48, HEIGHT - 50),
-        fontsize=60,
-        color="white",
+        fontsize=60, shadow=(2,2), scolor="#202020",
+        color="white", 
     )
-
-    color_ = "white"
 
     screen.draw.text(f"HP: {health}",
         (100, 100),
