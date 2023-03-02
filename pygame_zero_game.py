@@ -25,7 +25,7 @@ WIDTH = 1280
 HEIGHT = 800
 
 # Set up the player
-player = Actor("alien_green_stand")  # noqa: F821
+player = Actor("alien_green_stand")  # noqa: F82
 player_position = WIDTH // 2, HEIGHT // 2
 player.center = player_position
 
