@@ -142,22 +142,22 @@ def update(delta_time: float):
             score += 10
 
     # Check each spike in the list for a collision
-    for spike in spike_list:
+    for spike in spike_list: #
         if player.colliderect(spike):
             sounds.eep.play()  # edited
             spike_remove_list.append(spike)
             score -= 50
             health -=1
             if health > 3:
-                color_ = "white"
-            if health == 3:
-                color_ = "yellow"
-            elif health == 2:
-                color_ = "orange"
-            elif health == 1:
-                color_ = "red"
-        if len(spike_list) > 6:
-                spike_remove_list.append(spike)      
+                color_ = "white"            #          
+            if health == 3:                 #
+                color_ = "yellow"           #
+            elif health == 2:               # Занести в массив сердца
+                color_ = "orange"           #
+            elif health == 1:               #
+                color_ = "red"              #
+        if len(spike_list) > 6:             #
+            spike_remove_list.append(spike)      
 
 # Giving one health when score divides by 1000
         
