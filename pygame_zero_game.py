@@ -46,6 +46,7 @@ spike_interval = 0.8
 score = 0
 # Health is 5
 health = 5
+
 def add_spike():
     """should damage actor while touching
     """
