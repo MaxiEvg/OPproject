@@ -6,10 +6,11 @@ WIDTH = 1280
 HEIGHT = 800
 
 levels = []
-player_position = WIDTH // 3, HEIGHT // 3
+player = Actor()
+player_position = WIDTH // 2, HEIGHT // 2
 player.center = player_position
 
-def on_mouse_move(rel, buttons):
+def on_mouse_move(pos: Tuple):
     """Called whenever the mouse changes position
 
     Arguments:
