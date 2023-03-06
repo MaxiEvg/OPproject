@@ -6,7 +6,7 @@ WIDTH = 1280
 HEIGHT = 800
 
 levels = []
-player = Actor()
+player = Actor('alien_green_stand') 
 player_position = WIDTH // 2, HEIGHT // 2
 player.center = player_position
 
@@ -39,31 +39,37 @@ def update():
     global coin_interval
     global limit
     global lvl
+    global diff
+    global settings
     
+
     player.center = player_position
     
     for level in levels:
         if player.colliderect(level1):
-            coin_countdown = 4
-            coin_interval = 0.5
-            limit = 0.86
-            print('выбран 1 уровень')
-            lvl = 1
+            print('выбран 1 уровень') 
+
+            with open('diff.py',"w") as f:
+                f.write("coin_countdown1 = 4; coin_interval1 = 0.5; limit = 0.86; lvl = 1")
+
             break
         if player.colliderect(level2):
-            coin_countdown = 2
-            coin_interval = 0.3
-            limit = 0.7
             print('выбран 2 уровень')
-            lvl = 2
+
+            with open('diff.py',"w") as f:
+                f.write("coin_countdown1 = 2; coin_interval1 = 0.3; limit = 0.7; lvl = 2")
+
             break
         if player.colliderect(level3):
-            coin_countdown = 1
-            coin_interval = 0.2
-            limit = 0.5
+
             print('выбран 3 уровень')
-            lvl = 3
+
+            with open('diff.py',"w") as f:
+                f.write("coin_countdown1 = 1; coin_interval1 = 0.2; limit = 0.5; lvl = 3")
+
             break
+        
+            
 
 def draw():
     """Render everything on the screen once per frame"""

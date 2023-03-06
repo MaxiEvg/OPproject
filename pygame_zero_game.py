@@ -17,6 +17,8 @@ import pgzrun
 # For type-hinting support
 from typing import Tuple
 
+from diff import *
+
 # To randomize coin placement
 from random import randint
 
@@ -35,8 +37,8 @@ coin_list = list()
 
 spike_list = list()
 # Set up a timer to create new coins
-coin_countdown = 1
-coin_interval = 0.2
+coin_countdown = coin_countdown1
+coin_interval = coin_interval1
 
 # Setup a timer for create new spike
 spike_countdown = 5
@@ -85,8 +87,8 @@ def add_coin():
         coin_countdown -= coin_interval
 
     # Make sure you don't go too quickly
-    if coin_countdown < 0.4:
-        coin_countdown = 0.4
+    if coin_countdown < limit:
+        coin_countdown = limit
 
     # Schedule the next coin addition
     clock.schedule(add_coin, coin_countdown)  # noqa: F821
