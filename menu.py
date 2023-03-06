@@ -7,7 +7,7 @@ HEIGHT = 800
 
 levels = []
 player = Actor('alien_green_stand') 
-player_position = WIDTH // 2, HEIGHT // 2
+player_position = WIDTH // 4, HEIGHT // 4
 player.center = player_position
 
 def on_mouse_move(pos: Tuple):
