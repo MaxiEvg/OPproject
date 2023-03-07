@@ -1,6 +1,5 @@
 import pgzrun
 from typing import Tuple                    
-from diff import *
 from random import randint
 
 
@@ -15,28 +14,25 @@ player.center = player_position               #
 COIN_COUNT = 9                                # Кол-во максимальных монет
 coin_list = list()                            # Массив учета монет
 spike_list = list()                           # Массив учета спайков
-# Set up a timer to create new coins
-coin_countdown = 4
-coin_interval = 0.5                   
 
-# Setup a timer for create new spike
-spike_countdown = 5
-spike_interval = 0.8
+coin_countdown = 4                            # Задаем частоту появления монет (в сек)
+coin_interval = 0.5                           # Ускорение появления монет (в сек)
 
-# Score is initially zero
+spike_countdown = 5                           # Задаем частоту появления спайков
+spike_interval = 0.8                          # Ускорение появления спайков (в сек)
+
 score = 0
-# Health is 5
+health1 = []*5
 health = 5
+limit = 0.86
+
 
 def add_spike():
-    """should damage actor while touching
-    """
+    
     global spike_countdown
     
-    new_spike = Actor( 
-        "spike", (randint(10, WIDTH - 10), randint(10, HEIGHT - 10)) # done
-    )
-    # Adds spike to a list
+    new_spike = Actor("spike", (randint(10, WIDTH - 10), randint(10, HEIGHT - 10)))
+
     spike_list.append(new_spike)
     
     if len(spike_list) < 3:
@@ -44,88 +40,63 @@ def add_spike():
     if spike_countdown < 1:
        spike_countdown = 5
        
-    # Schedule the next spike addition
-    clock.schedule(add_spike, spike_countdown) 
+    clock.schedule(add_spike, spike_countdown)  # Частота появления спайков
 
 def add_coin():
-    """Adds a new coin to playfield, then
-    schedules the next coin to be added
-    """
+   
     global coin_countdown
 
-    # Create a new coin Actor at a random location
-    new_coin = Actor(  # noqa: F821
-        "coin_gold", (randint(10, WIDTH - 10), randint(10, HEIGHT - 10))
-    )
+    new_coin = Actor("coin_gold", (randint(10, WIDTH - 10), randint(10, HEIGHT - 10)))
 
-    # Add it to the global coin list
     coin_list.append(new_coin)
     
-    # Decrease the time between coin appearances if there are # fewer than three coins on the screen.
     if len(coin_list) < 3:
         coin_countdown -= coin_interval
 
-    # Make sure you don't go too quickly
     if coin_countdown < limit:
         coin_countdown = limit
 
-    # Schedule the next coin addition
-    clock.schedule(add_coin, coin_countdown)  # noqa: F821
+    clock.schedule(add_coin, coin_countdown)     # Частота появления монет
 
 
-def on_mouse_move(pos: Tuple):
-    """Called whenever the mouse changes position
-
-    Arguments:
-        pos {Tuple} -- The current position of the mouse
-    """
+def on_mouse_move(pos: Tuple):                   # pos {Tuple} - текущее положение мыши
+    
     global player_position
 
-    # Set the player to the mouse position
     player_position = pos
 
-    # Ensure the player doesn't move off the screen
-    if player_position[0] < 0:
-        player_position[0] = 0
-    if player_position[0] > WIDTH:
-        player_position[0] = WIDTH
-
-    if player_position[1] < 0:
-        player_position[1] = 0
-    if player_position[1] > HEIGHT:
-        player_position[1] = HEIGHT
+    if player_position[0] < 0:                    #
+        player_position[0] = 0                    #
+    if player_position[0] > WIDTH:                #
+        player_position[0] = WIDTH                #
+                                                  # Убедитесь, что игрок не выходит за пределы экрана
+    if player_position[1] < 0:                    #
+        player_position[1] = 0                    #
+    if player_position[1] > HEIGHT:               #
+        player_position[1] = HEIGHT               #
 
 color_ = "white"
 
-def update(delta_time: float):
-    """Called every frame to update game objects
-
-    Arguments:
-        delta_time {float} -- Time since the last frame
-    """
+def update(delta_time: float):                    # delta_time {float} - время с последнего кадра
+    
     global score
     global health 
     global color_
 
-    # Update the player position
     player.center = player_position
 
-    # Check if the player has collided with a coin or a spike
-    # First, setting up a list of coins or a spike to remove 
     coin_remove_list = []
     spike_remove_list = []
 
-    # Check each coin in the list for a collision
     for coin in coin_list:
         if player.colliderect(coin):
-            sounds.coin_pickup.play()  # noqa: F821
+            sounds.coin_pickup.play()  
             coin_remove_list.append(coin)
             score += 10
 
-    # Check each spike in the list for a collision
-    for spike in spike_list: #
+    for spike in spike_list: 
         if player.colliderect(spike):
-            sounds.eep.play()  # edited
+            sounds.eep.play()  
             spike_remove_list.append(spike)
             score -= 50
             health -=1
@@ -139,49 +110,35 @@ def update(delta_time: float):
                 color_ = "red"              #
         if len(spike_list) > 6:             #
             spike_remove_list.append(spike)      
-
-# Giving one health when score divides by 1000
         
     if (score % 1000 == 0) and (score > 0):
         health += 1
-        score += 10
-           
+        score += 10        
     if health > 5:
         health = 5
 
-    # Remove any coins with which you collided
     for coin in coin_remove_list:
         coin_list.remove(coin)
-    # Remove any spike with which you collided
     for spike in spike_remove_list:
         spike_list.remove(spike)
 
-    # The game is over when there are too many coins on the screen
     if len(coin_list) >= COIN_COUNT:
-        # Stop making new coins
         clock.unschedule(add_coin)  
         clock.unschedule(add_spike)
-
-        # Print the final score and exit the game
         print(f"Game over! Final score: {score}")
         exit()
     if health <=0:
         clock.unschedule(add_coin)
         clock.unschedule(add_spike)
-
-        # Print the final score and exit the game
         print(f"Game over! Final score: {score}")
         exit()
 
 
 def draw():
-    """Render everything on the screen once per frame"""
 
-    # Clear the screen first
     screen.clear()  
 
-    # Set the background color to pink
-    screen.fill("pink")  # noqa: F821
+    screen.fill("pink")  
     if len(coin_list) == 5:
         screen.fill("yellow")
     elif len(coin_list) == 6:
@@ -191,17 +148,22 @@ def draw():
     elif len(coin_list) >= 8:
         screen.fill("black")
     
-   
     player.draw()
 
+    for coin in coin_list:           
+        coin.draw()                  
+    for spike in spike_list:         
+        spike.draw()        
     
-    for coin in coin_list:           #
-        coin.draw()                  # Draw the remaining coins
-    for spike in spike_list:         #
-        spike.draw()                 #
 
-    # Draw the current score at the bottom
     
+    yyy = 130
+    for hp in range(len(health1)):
+        hp = Actor("hp", (yyy, 100))
+        yyy +=5
+        health1.append(hp)
+        hp.draw()
+
     screen.draw.text(
         f"Score: {score}",
         (48, HEIGHT - 50),
@@ -217,7 +179,7 @@ def draw():
     
 
 
-clock.schedule(add_coin, coin_countdown)        # Schedule the first coin to appear
-clock.schedule(add_spike, spike_countdown)      # Schedule the first spike to appear
+clock.schedule(add_coin, coin_countdown)       
+clock.schedule(add_spike, spike_countdown)     
 
 pgzrun.go()
