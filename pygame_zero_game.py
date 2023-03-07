@@ -1,44 +1,23 @@
-"""
-Complete game in Pygame Zero
-
-This game demonstrates some of the more advanced features of
-Pygame Zero, including:
-- Using sprites to render complex graphics
-- Handling user input
-- Sound output
-
-"""
-
-# Import pgzrun allows the program to run in Python IDLE
-# You can also run the program from the command line using:
-#   `pgzrun pygame_zero_basic.py`
 import pgzrun
-
-# For type-hinting support
-from typing import Tuple
-
+from typing import Tuple                    
 from diff import *
-
-# To randomize coin placement
 from random import randint
 
-# Set the width and height of your output window, in pixels
+
 WIDTH = 1280
 HEIGHT = 800
 
-# Set up the player
-player = Actor("alien_green_stand")  # noqa: F82
-player_position = WIDTH // 2, HEIGHT // 2
-player.center = player_position
 
-# Set up the coins to collect
-COIN_COUNT = 9
-coin_list = list()
+player = Actor("alien_green_stand")           # 
+player_position = WIDTH // 2, HEIGHT // 2     # Установка параметров игрока
+player.center = player_position               #
 
-spike_list = list()
+COIN_COUNT = 9                                # Кол-во максимальных монет
+coin_list = list()                            # Массив учета монет
+spike_list = list()                           # Массив учета спайков
 # Set up a timer to create new coins
-coin_countdown = coin_countdown1
-coin_interval = coin_interval1
+coin_countdown = 4
+coin_interval = 0.5                   
 
 # Setup a timer for create new spike
 spike_countdown = 5
@@ -54,7 +33,7 @@ def add_spike():
     """
     global spike_countdown
     
-    new_spike = Actor(  # edited
+    new_spike = Actor( 
         "spike", (randint(10, WIDTH - 10), randint(10, HEIGHT - 10)) # done
     )
     # Adds spike to a list
@@ -180,7 +159,7 @@ def update(delta_time: float):
     # The game is over when there are too many coins on the screen
     if len(coin_list) >= COIN_COUNT:
         # Stop making new coins
-        clock.unschedule(add_coin)  # noqa: F821
+        clock.unschedule(add_coin)  
         clock.unschedule(add_spike)
 
         # Print the final score and exit the game
@@ -199,7 +178,7 @@ def draw():
     """Render everything on the screen once per frame"""
 
     # Clear the screen first
-    screen.clear()  # noqa: F821
+    screen.clear()  
 
     # Set the background color to pink
     screen.fill("pink")  # noqa: F821
@@ -212,18 +191,18 @@ def draw():
     elif len(coin_list) >= 8:
         screen.fill("black")
     
-    # Draw the player
+   
     player.draw()
 
-    # Draw the remaining coins
-    for coin in coin_list:
-        coin.draw()
-    for spike in spike_list:
-        spike.draw()
+    
+    for coin in coin_list:           #
+        coin.draw()                  # Draw the remaining coins
+    for spike in spike_list:         #
+        spike.draw()                 #
 
     # Draw the current score at the bottom
     
-    screen.draw.text(  # edited
+    screen.draw.text(
         f"Score: {score}",
         (48, HEIGHT - 50),
         fontsize=60, shadow=(2,2), scolor="#202020",
@@ -237,9 +216,8 @@ def draw():
     )
     
 
-# Schedule the first coin to appear
-clock.schedule(add_coin, coin_countdown)  # noqa: F821
-# Schedule the first spike to appear
-clock.schedule(add_spike, spike_countdown) 
-# Run the program
+
+clock.schedule(add_coin, coin_countdown)        # Schedule the first coin to appear
+clock.schedule(add_spike, spike_countdown)      # Schedule the first spike to appear
+
 pgzrun.go()
