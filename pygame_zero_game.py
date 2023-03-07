@@ -185,4 +185,5 @@ def draw():
 clock.schedule(add_coin, coin_countdown)       
 clock.schedule(add_spike, spike_countdown)     
 
+
 pgzrun.go()
