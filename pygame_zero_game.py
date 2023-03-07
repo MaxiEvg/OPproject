@@ -21,7 +21,7 @@ coin_interval = 0.5                           # Ускорение появле�
 spike_countdown = 5                           # Задаем частоту появления спайков
 spike_interval = 0.8                          # Ускорение появления спайков (в сек)
 
-score = 0
+score = 950
 health1 = []*5
 health = 5
 limit = 0.86
@@ -156,13 +156,24 @@ def draw():
         spike.draw()        
     
 
-    
+
     yyy = 130
-    for hp in range(len(health1)):
-        hp = Actor("hp", (yyy, 100))
-        yyy +=5
-        health1.append(hp)
-        hp.draw()
+    hp1 = Actor("hp", (yyy,     100))
+    hp2 = Actor("hp", (yyy+50,  100))
+    hp3 = Actor("hp", (yyy+100, 100))
+    hp4 = Actor("hp", (yyy+150, 100))
+    hp5 = Actor("hp", (yyy+200, 100))
+    if health == 5:
+        hp1.draw(); hp2.draw(); hp3.draw(); hp4.draw(); hp5.draw()
+    elif health == 4:
+        hp1.draw(); hp2.draw(); hp3.draw(); hp4.draw(); 
+    elif health == 3:
+        hp1.draw(); hp2.draw(); hp3.draw(); 
+    elif health == 2:
+        hp1.draw(); hp2.draw()
+    elif health == 1:
+        hp1.draw()
+
 
     screen.draw.text(
         f"Score: {score}",
@@ -170,14 +181,6 @@ def draw():
         fontsize=60, shadow=(2,2), scolor="#202020",
         color="white", 
     )
-
-    screen.draw.text(f"HP: {health}",
-        (100, 100),
-        fontsize=60,
-        color=color_,
-    )
-    
-
 
 clock.schedule(add_coin, coin_countdown)       
 clock.schedule(add_spike, spike_countdown)     
