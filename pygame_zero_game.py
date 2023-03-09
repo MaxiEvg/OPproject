@@ -19,7 +19,7 @@ coin_countdown = 4                            # Задаем частоту по
 coin_interval = 0.5                           # Ускорение появления монет (в сек)
 
 spike_countdown = 2                           # Задаем частоту появления спайков
-spike_interval = 0.25                          # Ускорение появления спайков (в сек)
+spike_interval = 0.25                         # Ускорение появления спайков (в сек)
 
 score = 0
 health1 = list()
@@ -166,11 +166,11 @@ def draw():
     
     global yyy
     yyy = 70
-    hp1 = Actor("hp1", (yyy,     100))
-    hp2 = Actor("hp1", (yyy+50,  100))
-    hp3 = Actor("hp1", (yyy+100, 100))
-    hp4 = Actor("hp1", (yyy+150, 100))
-    hp5 = Actor("hp1", (yyy+200, 100))
+    hp1 = Actor("hp1", (yyy+100,     100))
+    hp2 = Actor("hp1", (yyy+150,  100))
+    hp3 = Actor("hp1", (yyy+200, 100))
+    hp4 = Actor("hp1", (yyy+250, 100))
+    hp5 = Actor("hp1", (yyy+300, 100))
 
     if health == 5:
         hp1.draw(); hp2.draw(); hp3.draw(); hp4.draw(); hp5.draw()
@@ -182,13 +182,16 @@ def draw():
         hp1.draw(); hp2.draw()
     elif health == 1:
         hp1.draw()
-        
     
+    hptxt = Actor("hp", (yyy+27,     104))
+    hptxt.draw()
+    scoretxt = Actor("score", (yyy+80, HEIGHT - 50))
+    scoretxt.draw()
 
     screen.draw.text(
-        f"Score: {score}",
-        (48, HEIGHT - 50),
-        fontsize=60, shadow=(2,2), scolor="#202020",
+        f"{score}",
+        (260, HEIGHT - 70),
+        fontsize=56, shadow=(2,2), scolor="#202020",
         color="white", 
     )
 
