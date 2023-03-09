@@ -7,7 +7,7 @@ WIDTH = 1280
 HEIGHT = 800
 
 
-player = Actor("gg")           # 
+player = Actor("gg")           
 player_position = WIDTH // 2, HEIGHT // 2     # Установка параметров игрока
 player.center = player_position               #
 
@@ -15,8 +15,8 @@ COIN_COUNT = 9                                # Кол-во максимальн
 coin_list = list()                            # Массив учета монет
 spike_list = list()                           # Массив учета спайков
 
-coin_countdown = 4                            # Задаем частоту появления монет (в сек)
-coin_interval = 0.5                           # Ускорение появления монет (в сек)
+coin_countdown = 3                            # Задаем частоту появления монет (в сек)
+coin_interval = 0.25                           # Ускорение появления монет (в сек)
 
 spike_countdown = 2                           # Задаем частоту появления спайков
 spike_interval = 0.25                         # Ускорение появления спайков (в сек)
@@ -24,7 +24,15 @@ spike_interval = 0.25                         # Ускорение появле�
 score = 0
 health1 = list()
 health = 5
-limit = 0.86
+limit = 0.7
+
+xxx = randint(1, 20)
+if xxx == 20:
+    music.play('oops')
+    music.set_volume(0.3)
+else:
+    music.play('level2')
+    music.set_volume(0.4)
 
 
 def add_spike():

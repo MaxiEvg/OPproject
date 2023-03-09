@@ -26,6 +26,13 @@ health1 = list()
 health = 5
 limit = 0.86
 
+xxx = randint(1, 20)
+if xxx == 20:
+    music.play('oops')
+    music.set_volume(0.3)
+else:
+    music.play('level3')
+    music.set_volume(0.4)
 
 def add_spike():
     
