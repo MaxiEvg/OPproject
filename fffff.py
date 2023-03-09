@@ -10,7 +10,7 @@ class Main(Frame):
 
     def build(self):
         self.formula = "Выбран уровень: "
-        self.lbl = Label(text=self.formula, font=("Bahnschrift SemiBold", 21, "bold"), bg="#000", foreground="#FFF")
+        self.lbl = Label(text=self.formula, font=("Bahnschrift SemiBold", 21, "bold"), bg="#040b17", foreground="#FFF")
         self.lbl.place(x=11, y=50)
 
         btns = [
@@ -56,7 +56,7 @@ class Main(Frame):
 
 if __name__ == '__main__':
     root = Tk()
-    root["bg"] = "#000"
+    root["bg"] = "#040b17"
     root.geometry("485x320+200+200")
     root.title("")
     root.resizable(False, False)

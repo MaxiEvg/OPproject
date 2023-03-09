@@ -7,7 +7,7 @@ WIDTH = 1280
 HEIGHT = 800
 
 
-player = Actor("gg")           
+player = Actor("gg")           # 
 player_position = WIDTH // 2, HEIGHT // 2     # Установка параметров игрока
 player.center = player_position               #
 
@@ -18,11 +18,11 @@ spike_list = list()                           # Массив учета спай
 coin_countdown = 4                            # Задаем частоту появления монет (в сек)
 coin_interval = 0.5                           # Ускорение появления монет (в сек)
 
-spike_countdown = 5                           # Задаем частоту появления спайков
-spike_interval = 0.8                          # Ускорение появления спайков (в сек)
+spike_countdown = 2                           # Задаем частоту появления спайков
+spike_interval = 0.25                          # Ускорение появления спайков (в сек)
 
 score = 0
-health1 = []*5
+health1 = list()
 health = 5
 limit = 0.86
 
@@ -31,11 +31,11 @@ def add_spike():
     
     global spike_countdown
     
-    new_spike = Actor("spike", (randint(10, WIDTH - 10), randint(10, HEIGHT - 10)))
+    new_spike = Actor("spike1", (randint(10, WIDTH - 10), randint(10, HEIGHT - 10)))
 
     spike_list.append(new_spike)
     
-    if len(spike_list) < 3:
+    if len(spike_list) < 5:
         spike_countdown -= spike_interval
     if spike_countdown < 1:
        spike_countdown = 5
@@ -46,7 +46,7 @@ def add_coin():
    
     global coin_countdown
 
-    new_coin = Actor("coin_gold", (randint(10, WIDTH - 10), randint(10, HEIGHT - 10)))
+    new_coin = Actor("coin_gold1", (randint(10, WIDTH - 10), randint(10, HEIGHT - 10)))
 
     coin_list.append(new_coin)
     
@@ -57,6 +57,13 @@ def add_coin():
         coin_countdown = limit
 
     clock.schedule(add_coin, coin_countdown)     # Частота появления монет
+
+def add_hp():
+
+    hp = Actor("hp", (yyy, 120))
+    
+    health1.append(hp)
+
 
 
 def on_mouse_move(pos: Tuple):                   # pos {Tuple} - текущее положение мыши
@@ -108,7 +115,7 @@ def update(delta_time: float):                    # delta_time {float} - вре�
                 color_ = "orange"           #
             elif health == 1:               #
                 color_ = "red"              #
-        if len(spike_list) > 6:             #
+        if len(spike_list) > 8:             #
             spike_remove_list.append(spike)      
         
     if (score % 1000 == 0) and (score > 0):
@@ -138,16 +145,16 @@ def draw():
 
     screen.clear()  
 
-    screen.fill("#000310")  
+    screen.fill("#040b17")  
     if health == 4:
         screen.blit("bg1", (0, 0))
-    elif health == 3: 
+    elif health == 3:
         screen.blit("bg2", (0, 0))
     elif health == 2:
-        screen.blit("bg3", (0, 0))
-    elif health == 1: 
+       screen.blit("bg3", (0, 0))
+    elif health == 1:
         screen.blit("bg4", (0, 0))
-    elif health == 0: 
+    elif health == 0:
         screen.blit("bg5", (0, 0))
     
     player.draw()
@@ -157,14 +164,14 @@ def draw():
     for spike in spike_list:         
         spike.draw()        
     
+    global yyy
+    yyy = 70
+    hp1 = Actor("hp1", (yyy,     100))
+    hp2 = Actor("hp1", (yyy+50,  100))
+    hp3 = Actor("hp1", (yyy+100, 100))
+    hp4 = Actor("hp1", (yyy+150, 100))
+    hp5 = Actor("hp1", (yyy+200, 100))
 
-
-    yyy = 130
-    hp1 = Actor("hp", (yyy,     100))
-    hp2 = Actor("hp", (yyy+50,  100))
-    hp3 = Actor("hp", (yyy+100, 100))
-    hp4 = Actor("hp", (yyy+150, 100))
-    hp5 = Actor("hp", (yyy+200, 100))
     if health == 5:
         hp1.draw(); hp2.draw(); hp3.draw(); hp4.draw(); hp5.draw()
     elif health == 4:
@@ -175,7 +182,8 @@ def draw():
         hp1.draw(); hp2.draw()
     elif health == 1:
         hp1.draw()
-
+        
+    
 
     screen.draw.text(
         f"Score: {score}",
@@ -184,8 +192,11 @@ def draw():
         color="white", 
     )
 
+   
+    
+
+
 clock.schedule(add_coin, coin_countdown)       
 clock.schedule(add_spike, spike_countdown)     
-
 
 pgzrun.go()
