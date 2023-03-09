@@ -105,8 +105,17 @@ def update(delta_time: float):                    # delta_time {float} - вре�
         if player.colliderect(spike):
             sounds.eep.play()  
             spike_remove_list.append(spike)
-            score -= 50            
-        if len(spike_list) > 8:             
+            score -= 50
+            health -=1
+            if health > 3:
+                color_ = "white"            #          
+            if health == 3:                 #
+                color_ = "yellow"           #
+            elif health == 2:               # Занести в массив сердца
+                color_ = "orange"           #
+            elif health == 1:               #
+                color_ = "red"              #
+        if len(spike_list) > 8:             #
             spike_remove_list.append(spike)      
         
     if (score % 1000 == 0) and (score > 0):
