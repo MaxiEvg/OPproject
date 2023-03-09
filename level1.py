@@ -26,8 +26,15 @@ health1 = list()
 health = 5
 limit = 0.86
 
-music.play('level1')
-music.set_volume(0.1)
+xxx = randint(1, 20)
+if xxx == 20:
+    music.play('oops')
+    music.set_volume(0.3)
+else:
+    music.play('level1')
+    music.set_volume(0.4)
+
+
 
 def add_spike():
     
@@ -59,13 +66,6 @@ def add_coin():
         coin_countdown = limit
 
     clock.schedule(add_coin, coin_countdown)     # Частота появления монет
-
-def add_hp():
-
-    hp = Actor("hp", (yyy, 120))
-    
-    health1.append(hp)
-
 
 
 def on_mouse_move(pos: Tuple):                   # pos {Tuple} - текущее положение мыши
@@ -99,7 +99,7 @@ def update(delta_time: float):                    # delta_time {float} - вре�
 
     for coin in coin_list:
         if player.colliderect(coin):
-            sounds.coin_pickup.play()  
+            sounds.coin.play()  
             coin_remove_list.append(coin)
             score += 10
 
@@ -109,15 +109,7 @@ def update(delta_time: float):                    # delta_time {float} - вре�
             spike_remove_list.append(spike)
             score -= 50
             health -=1
-            if health > 3:
-                color_ = "white"            #          
-            if health == 3:                 #
-                color_ = "yellow"           #
-            elif health == 2:               # Занести в массив сердца
-                color_ = "orange"           #
-            elif health == 1:               #
-                color_ = "red"              #
-        if len(spike_list) > 8:             #
+        if len(spike_list) > 8:             
             spike_remove_list.append(spike)      
         
     if (score % 1000 == 0) and (score > 0):
