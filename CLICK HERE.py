@@ -61,7 +61,7 @@ if __name__ == '__main__':
     root = Tk()
     root["bg"] = "#040b17"
     root.geometry("485x320+200+200")
-    root.title("")
+    root.title("MENU")
     root.resizable(False, False)
     app = Main(root)
     app.pack()

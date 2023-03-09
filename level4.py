@@ -15,16 +15,16 @@ COIN_COUNT = 9                                # Кол-во максимальн
 coin_list = list()                            # Массив учета монет
 spike_list = list()                           # Массив учета спайков
 
-coin_countdown = 4                            # Задаем частоту появления монет (в сек)
+coin_countdown = 1                            # Задаем частоту появления монет (в сек)
 coin_interval = 0.5                           # Ускорение появления монет (в сек)
 
-spike_countdown = 2                           # Задаем частоту появления спайков
+spike_countdown = 1                           # Задаем частоту появления спайков
 spike_interval = 0.25                         # Ускорение появления спайков (в сек)
 
 score = 0
 health1 = list()
 health = 5
-limit = 0.86
+limit = 0.206
 
 xxx = randint(1, 20)
 if xxx == 20:

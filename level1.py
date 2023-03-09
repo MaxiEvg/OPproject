@@ -99,7 +99,7 @@ def update(delta_time: float):                    # delta_time {float} - вре�
 
     for coin in coin_list:
         if player.colliderect(coin):
-            sounds.coin.play()  
+            sounds.coin_pickup.play()  
             coin_remove_list.append(coin)
             score += 10
 
