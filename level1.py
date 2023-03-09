@@ -26,6 +26,8 @@ health1 = list()
 health = 5
 limit = 0.86
 
+music.play('level1')
+music.set_volume(0.1)
 
 def add_spike():
     

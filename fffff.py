@@ -38,10 +38,13 @@ class Main(Frame):
             os.system('python level1.py')
         elif operation == "Уровень 2":
             self.formula = "Выбран уровень: Уровень 2"
+            os.system('python level2.py')
         elif operation == "Уровень 3":
             self.formula = "Выбран уровень: Уровень 3"
+            os.system('python level3.py')
         elif operation == "О_О":
             self.formula = "Ты бессмертный что ли?"
+            os.system('python level4.py')
         else:
             if self.formula == "0":
                 self.formula = ""
