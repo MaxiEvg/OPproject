@@ -7,7 +7,7 @@ WIDTH = 1280
 HEIGHT = 800
 
 
-player = Actor("alien_green_stand")           # 
+player = Actor("gg")           
 player_position = WIDTH // 2, HEIGHT // 2     # Установка параметров игрока
 player.center = player_position               #
 
@@ -21,7 +21,7 @@ coin_interval = 0.5                           # Ускорение появле�
 spike_countdown = 5                           # Задаем частоту появления спайков
 spike_interval = 0.8                          # Ускорение появления спайков (в сек)
 
-score = 950
+score = 0
 health1 = []*5
 health = 5
 limit = 0.86
@@ -138,15 +138,17 @@ def draw():
 
     screen.clear()  
 
-    screen.fill("pink")  
-    if len(coin_list) == 5:
-        screen.fill("yellow")
-    elif len(coin_list) == 6:
-        screen.fill("orange")
-    elif len(coin_list) == 7:
-        screen.fill("red")
-    elif len(coin_list) >= 8:
-        screen.fill("black")
+    screen.fill("#000310")  
+    if health == 4:
+        screen.blit("bg1", (0, 0))
+    elif health == 3: 
+        screen.blit("bg2", (0, 0))
+    elif health == 2:
+        screen.blit("bg3", (0, 0))
+    elif health == 1: 
+        screen.blit("bg4", (0, 0))
+    elif health == 0: 
+        screen.blit("bg5", (0, 0))
     
     player.draw()
 
