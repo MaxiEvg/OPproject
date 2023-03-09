@@ -35,7 +35,7 @@ class Main(Frame):
     def logicalc(self, operation):
         if operation == "Уровень 1":
             self.formula = "Выбран уровень: Уровень 1"
-            os.system('python pygame_zero_game.py')
+            os.system('python level1.py')
         elif operation == "Уровень 2":
             self.formula = "Выбран уровень: Уровень 2"
         elif operation == "Уровень 3":
